@@ -64,7 +64,7 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
   const [offline, setOffline] = useState(false);
   const [reconnecting, setReconnecting] = useState(false);
   const installPromptRef = useRef<InstallPromptEvent | null>(null);
-  const [installState, setInstallState] = useState<InstallState>(initialEmbedded ? "embedded" : "hidden");
+  const [installState, setInstallState] = useState<InstallState>("hidden");
   const [updateReady, setUpdateReady] = useState<ServiceWorker | null>(null);
   const [embeddedAndroid, setEmbeddedAndroid] = useState(initialEmbedded && initialAndroid);
   const [installHelpOpen, setInstallHelpOpen] = useState(false);
@@ -134,18 +134,16 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
     }
     window.addEventListener("beforeinstallprompt", onBeforeInstallPrompt);
 
-    if (env.standalone && !embedded) {
-      setInstallState("hidden");
-    } else if (embedded) {
-      // Embedded browsers are a compatibility gate, not an install promotion.
-      setInstallState("embedded");
-    }
+    // Installation is optional: embedded browsers may browse the site without a gate.
+    setInstallState("hidden");
 
     const requestInstall = () => {
       const current = environment();
       if (current.standalone) return;
       if (current.embedded) {
-        setInstallState("embedded");
+        setInstallPlatform(current.ios ? "ios" : current.android ? "android" : "other");
+        setInstallHelpOpen(true);
+        setInstallState("native");
         return;
       }
       if (installPromptRef.current) {
@@ -298,13 +296,18 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
   const installCard = installState === "native" ? (
     <div style={installShellStyle} role="presentation">
       <section className="plugInstallModal" role="dialog" aria-modal="false" aria-labelledby="plug-install-title" aria-describedby="plug-install-message">
-        <div className="plugInstallTop"><span className="plugInstallMark">P</span><span className="plugInstallTag">SHOP & COLLECT · BOTSWANA</span><button type="button" className="plugInstallClose" aria-label="Close install prompt" onClick={dismissInstall}>×</button></div>
-        <div className="plugInstallKicker">YOUR SOURCING APP</div>
+        <div className="plugInstallTop"><span className="plugInstallMark">S</span><span className="plugInstallTag">SHOP & COLLECT · BOTSWANA</span><button type="button" className="plugInstallClose" aria-label="Close install prompt" onClick={dismissInstall}>×</button></div>
+        <div className="plugInstallKicker">YOUR SHOPPING CONCEPT</div>
         <h2 id="plug-install-title">Shop & Collect.<br/><em>One tap away.</em></h2>
-        <p id="plug-install-message">Install Shop & Collect on your device for a direct home-screen shortcut to your sourcing requests, account and private conversations with Frank.</p>
+        <p id="plug-install-message">Install Shop & Collect for a convenient home-screen shortcut. Installation is optional; you can continue using the website without installing it.</p>
         {installHelpOpen ? (
           <div className="plugInstallSteps" role="status" aria-live="polite">
-            {installPlatform === "ios" ? (
+            {environment().embedded ? (
+              <>
+                <strong>Continue in your browser</strong>
+                <p>Use this app’s menu to open the page in your browser if you want to install it. Installation is optional; you can keep shopping here.</p>
+              </>
+            ) : installPlatform === "ios" ? (
               <>
                 <strong>Add Shop & Collect from Safari</strong>
                 <p>Open this page in <b>Safari</b>, tap <b>Share</b>, choose <b>Add to Home Screen</b>, then tap <b>Add</b>.</p>
@@ -324,7 +327,7 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
           </div>
         ) : (
           <>
-            <div className="plugInstallModalBenefits"><span><b>01</b><strong>Quick access</strong><small>Open Shop & Collect from your home screen.</small></span><span><b>02</b><strong>Your requests</strong><small>Return to your sourcing journey and account.</small></span><span><b>03</b><strong>Private by account</strong><small>Keep your conversations in your member space.</small></span></div>
+            <div className="plugInstallModalBenefits"><span><b>01</b><strong>Quick access</strong><small>Open Shop & Collect from your home screen.</small></span><span><b>02</b><strong>Your shopping list</strong><small>Keep building your sample basket.</small></span><span><b>03</b><strong>Optional install</strong><small>Use the website even if you do not install it.</small></span></div>
             <button type="button" className="plugInstallPrimary" onClick={() => void install()}>Install Shop & Collect →</button>
             <button type="button" className="plugInstallSecondary" onClick={dismissInstall}>Not now</button>
           </>
@@ -347,8 +350,8 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
   ) : null;
 
   return <>
-    {offline && <div className="offlineBanner" role="status" aria-live="polite"><span aria-hidden="true">⚡</span> Offline · Saved public finds may still be available on this device. Requests and account changes need a connection.</div>}
-    {!offline && reconnecting && <div className="offlineBanner reconnectingBanner" role="status" aria-live="polite"><span aria-hidden="true">↻</span> Reconnected · Shop & Collect is syncing and checking for the latest information.</div>}
+    {offline && <div className="offlineBanner" role="status" aria-live="polite"><span aria-hidden="true">⚡</span> Offline · Previously loaded catalogue content may be available. Live prices, availability and future order requests need a connection.</div>}
+    {!offline && reconnecting && <div className="offlineBanner reconnectingBanner" role="status" aria-live="polite"><span aria-hidden="true">↻</span> Connection restored · refresh to check the latest catalogue information.</div>}
     {!environment().standalone && installState !== "embedded" && (
       <button
         type="button"
