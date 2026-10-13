@@ -199,10 +199,35 @@ Source inspection, automated checks, emulator tests, browser/device testing and 
 
 ## 13. Current checkpoint and reporting
 
-Initial local foundation checkpoint: `d8a384d` — `chore: establish Sefalana Shop & Collect foundation`.
-The local repository was initialized from The Plug and its `origin` was set to `https://github.com/gatshaayanda/sefalana-shop-collect.git`. The user reported `git ls-remote origin` returned no refs. This does not prove a push occurred; none was authorized or reported.
+Repository: `gatshaayanda/sefalana-shop-collect`, branch `main`, remote `https://github.com/gatshaayanda/sefalana-shop-collect.git`.
 
-The identity reset and foundation verification remain to be completed. Do not claim this application is ready for customers until the required checks have actually run.
+Confirmed pushed foundation checkpoints:
+- `d8a384d` — `chore: establish Sefalana Shop & Collect foundation`.
+- `44d0f19` — `docs: define Sefalana Shop and Collect requirements`.
+
+Initial customer/admin prototype and identity-reset changes have since been committed directly to `main` through GitHub's file API. The exact current branch head must be rechecked before reporting the final checkpoint.
+
+Implemented at source level:
+- Customer storefront with synthetic sample departments/products, search, department filters, quantity controls and a browser-local basket.
+- `/admin` prototype for creating departments and adding/editing/hiding/publishing/deleting sample products.
+- Clear demo-only disclaimers; the basket continuation does not submit an order.
+- Updated package name, page metadata, manifest, icon, service-worker cache namespace and identity verification script.
+- Replaced the inherited operations-login endpoint with a disabled response until project-specific staff authentication is designed.
+- Supplied public Firebase web configuration added to `.env.example`; no service-account secret was supplied or configured.
+
+Important gaps:
+- Catalogue and basket data are browser-local only; there is no shared backend persistence.
+- The admin prototype is not authenticated or authorized. It must not be used with real catalogue, prices or customer data.
+- Product images are symbolic placeholders. Sample prices and availability are synthetic.
+- No order submission, collection slot generation, staff fulfilment queue, image upload, payment, live stock integration or customer notifications are implemented.
+- Full inherited route/data/security review and deployment/runtime validation remain outstanding.
+
+Verification status at this checkpoint:
+- Source inspection: PASS for the changed file contents as retrieved from GitHub.
+- Identity verifier, TypeScript, lint and build: NOT RUN in a local runtime.
+- Browser/mobile interaction and persistence testing: NOT RUN.
+- Firebase rules/auth/storage and server integration testing: NOT RUN.
+- Deployment/production behavior: NOT RUN; no explicit deployment action was performed by the implementation agent.
 
 After meaningful work:
 - Inspect the actual diff and check for regressions.
