@@ -41,7 +41,11 @@ if (!failures.length) {
   const sw = read("public/sw.js");
   if (!sw.includes("shop-collect-shell-v1")) failures.push("service worker: missing isolated Shop & Collect cache namespace");
   if (!sw.includes("/sefalana-shop-collect-icon.svg")) failures.push("service worker: canonical app icon missing");
-  for (const file of ["src/app/layout.tsx", "src/app/page.tsx", "src/app/admin/page.tsx", "src/app/offline/page.tsx", "src/app/pwa-register.tsx", "src/app/globals.css", "src/app/pwa.css", "public/sw.js", "public/icon.svg", "public/manifest.webmanifest"]) {
+  const installCss = read("src/app/globals.css").split("/* Branded install invitation")[1] || "";
+  if (!installCss) failures.push("globals.css: Shop & Collect install styling section missing");
+  if (installCss.includes("The Plug") || installCss.includes("plugInstall")) failures.push("globals.css: inherited identity remains in the active install styling section");
+  if (!read("src/app/layout.tsx").includes('apple:"/apple-touch-icon.png"')) failures.push("layout: Apple touch icon is not configured");
+  for (const file of ["src/app/layout.tsx", "src/app/page.tsx", "src/app/admin/page.tsx", "src/app/offline/page.tsx", "src/app/pwa-register.tsx", "src/app/pwa.css", "public/sw.js", "public/icon.svg", "public/manifest.webmanifest"]) {
     const content = read(file);
     if (content.includes("The Plug") || content.includes("plug-icon.svg")) failures.push(file + ": inherited storefront identity remains");
   }
