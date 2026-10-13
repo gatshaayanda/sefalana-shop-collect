@@ -211,7 +211,8 @@ Implemented at source level:
 - Customer storefront with synthetic sample departments/products, search, department filters, quantity controls and a browser-local basket.
 - `/admin` prototype for creating departments and adding/editing/hiding/publishing/deleting sample products.
 - Clear demo-only disclaimers; the basket continuation does not submit an order.
-- Updated package name, page metadata, manifest, icon, service-worker cache namespace and identity verification script.
+- Updated package name, page metadata, manifest, icon, offline screen, service-worker cache namespace and identity verification script. Legacy The Plug service-worker caches are deleted on activation.
+- PWA installation remains optional; the inherited embedded-browser install gate no longer blocks browsing.
 - Replaced the inherited operations-login endpoint with a disabled response until project-specific staff authentication is designed.
 - Supplied public Firebase web configuration added to `.env.example`; no service-account secret was supplied or configured.
 
