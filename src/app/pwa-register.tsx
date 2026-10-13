@@ -65,7 +65,6 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
   const [reconnecting, setReconnecting] = useState(false);
   const installPromptRef = useRef<InstallPromptEvent | null>(null);
   const [installState, setInstallState] = useState<InstallState>("hidden");
-  const [nativeInstallAvailable, setNativeInstallAvailable] = useState(false);
   const [updateReady, setUpdateReady] = useState<ServiceWorker | null>(null);
   const [embeddedAndroid, setEmbeddedAndroid] = useState(initialEmbedded && initialAndroid);
   const [installHelpOpen, setInstallHelpOpen] = useState(false);
@@ -117,7 +116,6 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
       event.preventDefault();
       const prompt = event as InstallPromptEvent;
       installPromptRef.current = prompt;
-      setNativeInstallAvailable(true);
       // Retain the one-shot native event for the user's explicit Install click.
       // Do not interrupt page load with a second, custom install screen.
     };
@@ -152,13 +150,15 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
         void install();
         return;
       }
-      // Native installation is browser-controlled. Never substitute a Chrome-menu
-      // instruction modal for the real beforeinstallprompt event.
-      return;
+      // Match the working Odi install flow: never let a visible install CTA silently
+      // do nothing when this browser has not emitted beforeinstallprompt.
+      const platform = current.ios ? "ios" : current.android ? "android" : "other";
+      setInstallPlatform(platform);
+      setInstallHelpOpen(true);
+      setInstallState("native");
     };
     const appInstalled = () => {
       installPromptRef.current = null;
-      setNativeInstallAvailable(false);
       setInstallHelpOpen(false);
       setInstallState("hidden");
       clearDismissal();
@@ -236,8 +236,12 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
   async function install() {
     const prompt = installPromptRef.current;
     if (!prompt) {
-      // The native browser prompt is available only when the browser supplies
-      // beforeinstallprompt. Do not replace it with a manual-instructions modal.
+      // Native install events are browser-controlled. Show the same explicit
+      // platform-specific fallback as Odi rather than silently returning.
+      const env = environment();
+      setInstallPlatform(env.ios ? "ios" : env.android ? "android" : "other");
+      setInstallHelpOpen(true);
+      setInstallState("native");
       return;
     }
     try {
@@ -348,12 +352,19 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
   return <>
     {offline && <div className="offlineBanner" role="status" aria-live="polite"><span aria-hidden="true">⚡</span> Offline · Previously loaded catalogue content may be available. Live prices, availability and future order requests need a connection.</div>}
     {!offline && reconnecting && <div className="offlineBanner reconnectingBanner" role="status" aria-live="polite"><span aria-hidden="true">↻</span> Connection restored · refresh to check the latest catalogue information.</div>}
-    {!environment().standalone && installState !== "embedded" && nativeInstallAvailable && (
+    {!environment().standalone && installState !== "embedded" && (
       <button
         type="button"
         className="shopCollectPwaInstallButton"
         onClick={() => {
-          if (installPromptRef.current) void install();
+          if (installPromptRef.current) {
+            void install();
+            return;
+          }
+          const env = environment();
+          setInstallPlatform(env.ios ? "ios" : env.android ? "android" : "other");
+          setInstallHelpOpen(true);
+          setInstallState("native");
         }}
       >
         Install Shop & Collect ↓
