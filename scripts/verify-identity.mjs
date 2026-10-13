@@ -41,7 +41,7 @@ if (!failures.length) {
   const sw = read("public/sw.js");
   if (!sw.includes("shop-collect-shell-v1")) failures.push("service worker: missing isolated Shop & Collect cache namespace");
   if (!sw.includes("/sefalana-shop-collect-icon.svg")) failures.push("service worker: canonical app icon missing");
-  const installCss = read("src/app/globals.css").split("/* Branded install invitation")[1] || "";
+  const installCss = (read("src/app/globals.css").split("/* Branded install invitation")[1] || "").split("/*")[0];
   if (!installCss) failures.push("globals.css: Shop & Collect install styling section missing");
   if (installCss.includes("The Plug") || installCss.includes("plugInstall")) failures.push("globals.css: inherited identity remains in the active install styling section");
   if (!read("src/app/layout.tsx").includes('apple:"/apple-touch-icon.png"')) failures.push("layout: Apple touch icon is not configured");
