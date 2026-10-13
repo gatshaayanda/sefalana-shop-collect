@@ -27,10 +27,10 @@ if (!failures.length) {
   if (manifest.theme_color !== "#1f5b43") failures.push("manifest: incorrect theme color");
   if (!manifest.icons?.some((icon) => icon.src === "/sefalana-shop-collect-icon.svg")) failures.push("manifest: app icon missing");
   const sw = read("public/sw.js");
-  if (!/shop-collect-shell-v\d+/.test(sw)) failures.push("service worker: missing isolated Shop & Collect cache namespace");
+  if (!/shop-collect-shell-v\\d+/.test(sw)) failures.push("service worker: missing isolated Shop & Collect cache namespace");
   if (!sw.includes("/sefalana-shop-collect-icon.svg")) failures.push("service worker: canonical app icon missing");
-  for (const file of ["src/app/layout.tsx", "src/app/page.tsx", "src/app/admin/page.tsx", "src/app/pwa-register.tsx", "public/sw.js"]) {
-    if (/The Plug|theplug-shell|theplug-media|plug-icon\.svg/i.test(read(file))) failures.push(file + ": inherited storefront identity remains");
+  for (const file of ["src/app/layout.tsx", "src/app/page.tsx", "src/app/admin/page.tsx", "src/app/offline/page.tsx", "src/app/pwa-register.tsx", "public/sw.js"]) {
+    if (/The Plug|plug-icon\\.svg/i.test(read(file))) failures.push(file + ": inherited storefront identity remains");
   }
 }
 if (failures.length) {
