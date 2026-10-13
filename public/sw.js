@@ -50,7 +50,7 @@ const MEDIA_CACHE = "shop-collect-media-v1";
 const SHELL_CACHE = CACHE_VERSION;
 const STATIC_LIMIT = 100;
 const PUBLIC_PAGE_LIMIT = 12;
-const APP_SHELL = ["/", "/offline", "/icon.svg", "/sefalana-shop-collect-icon.svg", "/manifest.webmanifest"];
+const APP_SHELL = ["/", "/offline", "/icon.svg", "/sefalana-shop-collect-icon.svg", "/shop-collect-icon-192.png", "/shop-collect-icon-512.png", "/apple-touch-icon.png", "/manifest.webmanifest"];
 
 self.addEventListener("install", event => {
   event.waitUntil((async () => {

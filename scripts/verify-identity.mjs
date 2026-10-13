@@ -12,6 +12,9 @@ const requiredFiles = [
   "public/manifest.webmanifest",
   "public/sefalana-shop-collect-icon.svg",
   "public/icon.svg",
+  "public/shop-collect-icon-192.png",
+  "public/shop-collect-icon-512.png",
+  "public/apple-touch-icon.png",
   "package.json",
 ];
 const failures = [];
@@ -27,7 +30,10 @@ if (!failures.length) {
   if (manifest.short_name !== "Shop & Collect") failures.push("manifest: incorrect short name");
   if (manifest.theme_color !== "#1f5b43") failures.push("manifest: incorrect theme color");
   if (!manifest.icons?.some((icon) => icon.src === "/icon.svg" && icon.purpose === "any")) failures.push("manifest: standard app icon missing");
-  if (!manifest.icons?.some((icon) => icon.src === "/icon.svg" && icon.purpose === "maskable")) failures.push("manifest: maskable app icon missing");
+  if (!manifest.icons?.some((icon) => icon.src === "/shop-collect-icon-192.png" && icon.sizes === "192x192")) failures.push("manifest: 192px raster app icon missing");
+  if (!manifest.icons?.some((icon) => icon.src === "/shop-collect-icon-512.png" && icon.sizes === "512x512" && icon.purpose === "any")) failures.push("manifest: 512px raster app icon missing");
+  if (!manifest.icons?.some((icon) => icon.src === "/shop-collect-icon-512.png" && icon.purpose === "maskable")) failures.push("manifest: maskable app icon missing");
+  if (!manifest.icons?.some((icon) => icon.src === "/icon.svg" && icon.purpose === "any")) failures.push("manifest: vector app icon missing");
   if (!read("public/icon.svg").includes("#1f5b43")) failures.push("public/icon.svg: expected Shop & Collect brand artwork missing");
   for (const legacy of ["public/plug-icon.svg", "public/plug-icon-192.png", "public/plug-icon-512.png"]) {
     if (fs.existsSync(path.join(root, legacy))) failures.push(legacy + ": inherited The Plug icon must be removed");
