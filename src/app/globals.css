@@ -225,7 +225,7 @@ h1 em{font-style:normal;color:var(--plug-blue);text-shadow:0 0 22px rgba(8,102,2
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
 
-/* The Plug install-first experience: branded, product-led, responsive. */
+/* Install-first experience: branded, product-led, responsive. */
 .plugInstallLanding{--plug-blue:#0866ff;--plug-red:#ed1c24}
 .plugInstallLanding .plugNotice a{color:#fff;text-decoration:none;font-weight:900}
 .plugInstallLanding .plugNavInner{gap:20px}
@@ -382,7 +382,7 @@ h1 em{font-style:normal;color:var(--plug-blue);text-shadow:0 0 22px rgba(8,102,2
 @media(prefers-reduced-motion:reduce){.shopCollectInstallModal{animation:none}}
 
 
-/* The Plug storefront hierarchy: own finds/deals first, external discovery last. */
+/* Storefront hierarchy: featured items first, external discovery last. */
 .plugTextLink,.plugCatalogueFallback{position:relative;display:inline-block;margin-top:14px;color:#1f5b43;font-size:.84rem;font-weight:900;text-decoration:none}
 .plugTextLink:hover,.plugCatalogueFallback:hover{text-decoration:underline}
 .plugDealEmpty{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:26px;margin-top:24px;padding:30px;border:1px solid #e5e7eb;border-radius:20px;background:linear-gradient(135deg,#fff,#f7f8fb)}
@@ -599,7 +599,7 @@ button.plugProductAction{width:100%;align-items:center;background:transparent;bo
 @media(prefers-reduced-motion:reduce){.plugLoadingStatePulse,.plugLoadingStateTrack span{animation:none}.plugLoadingStateTrack span{left:0;width:100%}}
 
 
-/* The Plug member band: hard contrast guarantees for the actual editorial homepage. */
+/* Member band: hard contrast guarantees for the homepage. */
 .plugEditorialHome .plugMemberLoop{background:#101010!important;color:#f5f5f5!important}
 .plugEditorialHome .plugMemberLoopHead h2{color:#f5f5f5!important}
 .plugEditorialHome .plugMemberLoopHead h2 em{color:#c8dcff!important}
