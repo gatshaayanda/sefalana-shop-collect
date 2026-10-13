@@ -3,45 +3,45 @@ import type { MetadataRoute } from "next";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     id: "/",
-    name: "The Plug | Sneakers & Apparel",
-    short_name: "The Plug",
-    description: "Install The Plug for one-tap access to sneaker and apparel sourcing in Botswana. If we can source it, you can get it.",
+    name: "Shop & Collect | Grocery Shopping",
+    short_name: "Shop & Collect",
+    description: "A proposed grocery shopping and collection concept for Mogoditshane.",
     start_url: "/",
     scope: "/",
     display: "standalone",
-    background_color: "#FFFFFF",
-    theme_color: "#0866FF",
+    background_color: "#f7f6ef",
+    theme_color: "#1f5b43",
     orientation: "portrait-primary",
     lang: "en",
-    categories: ["shopping", "lifestyle"],
+    categories: ["shopping", "food"],
     prefer_related_applications: false,
     icons: [
-      { src: "/plug-icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
-      { src: "/plug-icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
-      { src: "/plug-icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
-      { src: "/plug-icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" }
+      { src: "/shop-collect-icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+      { src: "/shop-collect-icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+      { src: "/shop-collect-icon-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+      { src: "/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" }
     ],
     shortcuts: [
       {
-        name: "Request a product",
-        short_name: "Request",
-        description: "Ask The Plug to source a sneaker or apparel item",
-        url: "/request",
-        icons: [{ src: "/plug-icon-192.png", sizes: "192x192", type: "image/png" }]
+        name: "Browse groceries",
+        short_name: "Browse",
+        description: "Explore the Shop & Collect catalogue",
+        url: "/",
+        icons: [{ src: "/shop-collect-icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
-        name: "My orders",
-        short_name: "Orders",
-        description: "View your requests and orders",
+        name: "My requests",
+        short_name: "Requests",
+        description: "View your shopping requests",
         url: "/account",
-        icons: [{ src: "/plug-icon-192.png", sizes: "192x192", type: "image/png" }]
+        icons: [{ src: "/shop-collect-icon-192.png", sizes: "192x192", type: "image/png" }]
       },
       {
-        name: "The Plug admin",
+        name: "Shop & Collect admin",
         short_name: "Admin",
         description: "Open protected business control",
         url: "/admin",
-        icons: [{ src: "/plug-icon-192.png", sizes: "192x192", type: "image/png" }]
+        icons: [{ src: "/shop-collect-icon-192.png", sizes: "192x192", type: "image/png" }]
       }
     ]
   };
