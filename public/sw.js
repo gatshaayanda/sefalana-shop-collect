@@ -91,7 +91,7 @@ self.addEventListener("message", event => {
 self.addEventListener("activate", event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter(key => (key.startsWith("shop-collect-shell-") && key !== SHELL_CACHE) || (key.startsWith("shop-collect-media-") && key !== MEDIA_CACHE)).map(key => caches.delete(key)));
+    await Promise.all(keys.filter(key => (key.startsWith("shop-collect-shell-") && key !== SHELL_CACHE) || key.startsWith("theplug-shell-") || (key.startsWith("shop-collect-media-") && key !== MEDIA_CACHE) || key.startsWith("theplug-media-"))).map(key => caches.delete(key)));
     await self.clients.claim();
   })());
 });
