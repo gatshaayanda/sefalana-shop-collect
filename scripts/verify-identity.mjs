@@ -6,6 +6,7 @@ const requiredFiles = [
   "src/app/layout.tsx",
   "src/app/page.tsx",
   "src/app/admin/page.tsx",
+  "src/app/offline/page.tsx",
   "src/app/pwa-register.tsx",
   "public/sw.js",
   "public/manifest.webmanifest",
