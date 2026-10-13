@@ -75,7 +75,6 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
   useEffect(() => {
     setOffline(!navigator.onLine);
     const env = environment();
-    const embedded = initialEmbedded || env.embedded;
     setEmbeddedAndroid((initialEmbedded && initialAndroid) || (env.embedded && env.android));
     setInstallPlatform(env.ios ? "ios" : env.android ? "android" : "other");
 
