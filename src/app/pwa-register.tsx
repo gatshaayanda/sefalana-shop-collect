@@ -209,7 +209,7 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
     const previousOverflow = document.body.style.overflow;
     if (isEmbeddedGate) document.body.style.overflow = "hidden";
     if (installState === "embedded") embeddedActionRef.current?.focus();
-    else document.querySelector<HTMLButtonElement>(".plugInstallPrimary")?.focus();
+    else document.querySelector<HTMLButtonElement>(".shopCollectInstallPrimary")?.focus();
 
     const keepDialogFocused = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -294,17 +294,18 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
   const embeddedInstallStyle: CSSProperties = { position: "fixed", inset: 0, zIndex: 2147483647, display: "flex", alignItems: "center", justifyContent: "center", padding: 20, background: "rgba(0,0,0,.82)", backdropFilter: "blur(4px)", overscrollBehavior: "contain" };
   const installCard = installState === "native" ? (
     <div style={installShellStyle} role="presentation">
-      <section className="plugInstallModal" role="dialog" aria-modal="false" aria-labelledby="plug-install-title" aria-describedby="plug-install-message">
-        <div className="plugInstallTop"><span className="plugInstallMark">S</span><span className="plugInstallTag">SHOP & COLLECT · BOTSWANA</span><button type="button" className="plugInstallClose" aria-label="Close install prompt" onClick={dismissInstall}>×</button></div>
-        <div className="plugInstallKicker">YOUR SHOPPING CONCEPT</div>
-        <h2 id="plug-install-title">Shop & Collect.<br/><em>One tap away.</em></h2>
+      <section className="shopCollectInstallModal" role="dialog" aria-modal="false" aria-labelledby="shop-collect-install-title" aria-describedby="plug-install-message">
+        <div className="shopCollectInstallTop"><span className="shopCollectInstallMark">S</span><span className="shopCollectInstallTag">SHOP & COLLECT · BOTSWANA</span><button type="button" className="shopCollectInstallClose" aria-label="Close install prompt" onClick={dismissInstall}>×</button></div>
+        <div className="shopCollectInstallKicker">YOUR SHOPPING CONCEPT</div>
+        <h2 id="shop-collect-install-title">Shop & Collect.<br/><em>One tap away.</em></h2>
         <p id="plug-install-message">Install Shop & Collect for a convenient home-screen shortcut. Installation is optional; you can continue using the website without installing it.</p>
         {installHelpOpen ? (
-          <div className="plugInstallSteps" role="status" aria-live="polite">
+          <div className="shopCollectInstallSteps" role="status" aria-live="polite">
             {environment().embedded ? (
               <>
                 <strong>Continue in your browser</strong>
-                <p>Use this app’s menu to open the page in your browser if you want to install it. Installation is optional; you can keep shopping here.</p>
+                <p>Open Shop & Collect in your browser if you want to install it. Installation is optional; you can keep shopping here.</p>
+                <button type="button" className="shopCollectInstallPrimary" onClick={openBrowser}>Open in browser →</button>
               </>
             ) : installPlatform === "ios" ? (
               <>
@@ -322,24 +323,24 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
                 <p>In Chrome or Edge, open the browser menu and choose <b>Install Shop & Collect</b> or <b>Install page as app</b>, if offered.</p>
               </>
             )}
-            <button type="button" className="plugInstallPrimary" onClick={dismissInstall}>Got it</button>
+            <button type="button" className="shopCollectInstallPrimary" onClick={dismissInstall}>Got it</button>
           </div>
         ) : (
           <>
-            <div className="plugInstallModalBenefits"><span><b>01</b><strong>Quick access</strong><small>Open Shop & Collect from your home screen.</small></span><span><b>02</b><strong>Your shopping list</strong><small>Keep building your sample basket.</small></span><span><b>03</b><strong>Optional install</strong><small>Use the website even if you do not install it.</small></span></div>
-            <button type="button" className="plugInstallPrimary" onClick={() => void install()}>Install Shop & Collect →</button>
-            <button type="button" className="plugInstallSecondary" onClick={dismissInstall}>Not now</button>
+            <div className="shopCollectInstallModalBenefits"><span><b>01</b><strong>Quick access</strong><small>Open Shop & Collect from your home screen.</small></span><span><b>02</b><strong>Your shopping list</strong><small>Keep building your sample basket.</small></span><span><b>03</b><strong>Optional install</strong><small>Use the website even if you do not install it.</small></span></div>
+            <button type="button" className="shopCollectInstallPrimary" onClick={() => void install()}>Install Shop & Collect →</button>
+            <button type="button" className="shopCollectInstallSecondary" onClick={dismissInstall}>Not now</button>
           </>
         )}
-        <p className="plugInstallFootnote">No app-store search needed. Your browser will guide the installation.</p>
+        <p className="shopCollectInstallFootnote">No app-store search needed. Your browser will guide the installation.</p>
       </section>
     </div>
   ) : installState === "embedded" ? (
-    <div style={embeddedInstallStyle} role="alertdialog" aria-modal="true" aria-labelledby="plug-embedded-title" aria-describedby="plug-embedded-message">
+    <div style={embeddedInstallStyle} role="alertdialog" aria-modal="true" aria-labelledby="shop-collect-embedded-title" aria-describedby="shop-collect-embedded-message">
       <div className="pwaInstallInfo" style={{...installShellStyle, position: "relative", left: "auto", right: "auto", bottom: "auto", width: "100%", maxWidth: 520, margin: 0}}>
         <div>
-          <strong id="plug-embedded-title"><span aria-hidden="true">🌐 </span>OPEN SHOP & COLLECT IN YOUR BROWSER</strong>
-          <span id="plug-embedded-message">{embeddedAndroid ? <>Tap below to open Shop & Collect in Chrome. Then open the <b>⋮ menu</b> and choose <b>Install app</b>.</> : <>Shop & Collect opened inside another app. Use that app’s menu to open this page in your browser, then look for <b>Install app</b> in the browser menu.</>}</span>
+          <strong id="shop-collect-embedded-title"><span aria-hidden="true">🌐 </span>OPEN SHOP & COLLECT IN YOUR BROWSER</strong>
+          <span id="shop-collect-embedded-message">{embeddedAndroid ? <>Tap below to open Shop & Collect in Chrome. Then open the <b>⋮ menu</b> and choose <b>Install app</b>.</> : <>Shop & Collect opened inside another app. Use that app’s menu to open this page in your browser, then look for <b>Install app</b> in the browser menu.</>}</span>
         </div>
         <div className="pwaInstallActions" style={{display:"flex",justifyContent:"flex-end"}}>
           <button ref={embeddedActionRef} type="button" style={{background:"#0866FF",color:"#fff"}} onClick={openBrowser}>{embeddedAndroid ? "OPEN IN CHROME" : "OPEN IN BROWSER"}</button>
@@ -354,7 +355,7 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
     {!environment().standalone && installState !== "embedded" && (
       <button
         type="button"
-        className="plugPwaInstallButton"
+        className="shopCollectPwaInstallButton"
         onClick={() => {
           if (installPromptRef.current) {
             void install();

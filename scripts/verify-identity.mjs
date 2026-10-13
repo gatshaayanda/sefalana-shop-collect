@@ -11,6 +11,7 @@ const requiredFiles = [
   "public/sw.js",
   "public/manifest.webmanifest",
   "public/sefalana-shop-collect-icon.svg",
+  "public/icon.svg",
   "package.json",
 ];
 const failures = [];
@@ -25,11 +26,16 @@ if (!failures.length) {
   if (manifest.name !== "Shop & Collect | Grocery Shopping") failures.push("manifest: incorrect app name");
   if (manifest.short_name !== "Shop & Collect") failures.push("manifest: incorrect short name");
   if (manifest.theme_color !== "#1f5b43") failures.push("manifest: incorrect theme color");
-  if (!manifest.icons?.some((icon) => icon.src === "/sefalana-shop-collect-icon.svg")) failures.push("manifest: app icon missing");
+  if (!manifest.icons?.some((icon) => icon.src === "/icon.svg" && icon.purpose === "any")) failures.push("manifest: standard app icon missing");
+  if (!manifest.icons?.some((icon) => icon.src === "/icon.svg" && icon.purpose === "maskable")) failures.push("manifest: maskable app icon missing");
+  if (!read("public/icon.svg").includes("#1f5b43")) failures.push("public/icon.svg: expected Shop & Collect brand artwork missing");
+  for (const legacy of ["public/plug-icon.svg", "public/plug-icon-192.png", "public/plug-icon-512.png"]) {
+    if (fs.existsSync(path.join(root, legacy))) failures.push(legacy + ": inherited The Plug icon must be removed");
+  }
   const sw = read("public/sw.js");
   if (!sw.includes("shop-collect-shell-v1")) failures.push("service worker: missing isolated Shop & Collect cache namespace");
   if (!sw.includes("/sefalana-shop-collect-icon.svg")) failures.push("service worker: canonical app icon missing");
-  for (const file of ["src/app/layout.tsx", "src/app/page.tsx", "src/app/admin/page.tsx", "src/app/offline/page.tsx", "src/app/pwa-register.tsx", "public/sw.js"]) {
+  for (const file of ["src/app/layout.tsx", "src/app/page.tsx", "src/app/admin/page.tsx", "src/app/offline/page.tsx", "src/app/pwa-register.tsx", "src/app/globals.css", "src/app/pwa.css", "public/sw.js", "public/icon.svg", "public/manifest.webmanifest"]) {
     const content = read(file);
     if (content.includes("The Plug") || content.includes("plug-icon.svg")) failures.push(file + ": inherited storefront identity remains");
   }
