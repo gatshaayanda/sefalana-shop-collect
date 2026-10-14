@@ -39,7 +39,7 @@ if (!failures.length) {
     if (fs.existsSync(path.join(root, legacy))) failures.push(legacy + ": inherited The Plug icon must be removed");
   }
   const sw = read("public/sw.js");
-  if (!sw.includes("shop-collect-shell-v1")) failures.push("service worker: missing isolated Shop & Collect cache namespace");
+  if (!sw.includes("shop-collect-shell-v2")) failures.push("service worker: missing isolated Shop & Collect cache namespace");
   if (!sw.includes("/sefalana-shop-collect-icon.svg")) failures.push("service worker: canonical app icon missing");
   const installCss = (read("src/app/globals.css").split("/* Branded install invitation")[1] || "").split("/*")[0];
   if (!installCss) failures.push("globals.css: Shop & Collect install styling section missing");

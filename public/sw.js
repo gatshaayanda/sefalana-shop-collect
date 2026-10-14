@@ -45,7 +45,7 @@ self.addEventListener("notificationclick", (event) => {
   }));
 });
 
-const CACHE_VERSION = "shop-collect-shell-v1";
+const CACHE_VERSION = "shop-collect-shell-v2";
 const MEDIA_CACHE = "shop-collect-media-v1";
 const SHELL_CACHE = CACHE_VERSION;
 const STATIC_LIMIT = 100;
@@ -112,7 +112,14 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  if (url.pathname.startsWith("/_next/static/") || url.pathname === "/manifest.webmanifest" || /\.(?:css|js|woff2?|ttf|otf|png|jpe?g|webp|svg|ico|avif)$/i.test(url.pathname)) {
+  // The browser uses this manifest to name the native install prompt. Always refresh it
+  // from the network when possible so a previous app identity cannot persist in Cache Storage.
+  if (url.pathname === "/manifest.webmanifest") {
+    event.respondWith(networkFirst(request));
+    return;
+  }
+
+  if (url.pathname.startsWith("/_next/static/") || /\.(?:css|js|woff2?|ttf|otf|png|jpe?g|webp|svg|ico|avif)$/i.test(url.pathname)) {
     event.respondWith(cacheFirst(request));
     return;
   }
@@ -130,6 +137,20 @@ self.addEventListener("fetch", event => {
     }));
   }
 });
+
+async function networkFirst(request) {
+  const cache = await caches.open(SHELL_CACHE);
+  try {
+    const response = await fetch(new Request(request, { cache: "no-store" }));
+    if (response.ok) {
+      await cache.put(request, response.clone());
+      return response;
+    }
+    return (await cache.match(request)) || response;
+  } catch {
+    return (await cache.match(request)) || Response.error();
+  }
+}
 
 async function cacheFirst(request) {
   const cache = await caches.open(SHELL_CACHE);
