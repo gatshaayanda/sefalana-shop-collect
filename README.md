@@ -29,6 +29,10 @@ npm run lint
 npm run build
 ```
 
+## PWA install verification
+
+On a supported Android browser, verify the Shop & Collect install control invokes the browser's native install prompt when the browser exposes `beforeinstallprompt`. If the browser does not expose that event, verify the platform-specific fallback is accurate. After installation, check the home-screen name and icon, launch behavior, and service-worker/cache identity separately. A successful CI/build check alone does not prove installation works on a real device.
+
 ## Firebase configuration
 
 `.env.example` contains the supplied public web configuration for Firebase project `sefalana-shop-collect`. Copy the values into local `.env.local` for development. Firebase web config does not create secure staff access or authorize Firestore/Storage operations. Keep service-account credentials separate, never commit them, and do not reuse credentials or production data from The Plug.
