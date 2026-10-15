@@ -55,6 +55,11 @@ export default function HomePage() {
       <article><span>02</span><div><strong>Build your basket</strong><p>Choose pack sizes and review your illustrative subtotal.</p></div></article>
       <article><span>03</span><div><strong>Plan to collect</strong><p>Collection times are not live yet; the branch must approve the process first.</p></div></article>
     </section>
+    <section className="shop-photo-story" aria-label="Sefalana store reference photography">
+      <div className="shop-photo-story-heading"><p className="shop-eyebrow">INSPIRED BY YOUR STORE</p><h2>Built around the real<br/><em>shopping experience.</em></h2><p>Store reference photos supplied for this pilot concept. Product listings and prices remain illustrative until the branch approves the catalogue.</p></div>
+      <figure><img src="/images/sef1.jpeg" alt="Sefalana beverage display with stacked wine cartons" loading="lazy"/><figcaption>Browse the department</figcaption></figure>
+      <figure><img src="/images/sef3.jpeg" alt="Sefalana checkout area and main store aisle" loading="lazy"/><figcaption>Plan a smoother collection</figcaption></figure>
+    </section>
     <section className="shop-catalogue" id="shop-products">
       <div className="shop-section-heading"><div><p className="shop-eyebrow">THE LIQUOR RANGE</p><h2>What are you looking for?</h2><p>Browse the sample range by category. All products and prices are illustrative test data.</p></div><label className="shop-search"><span aria-hidden="true">⌕</span><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search beer, wine, spirits…" aria-label="Search liquor products"/><kbd>SEARCH</kbd></label></div>
       <div className="shop-departments" aria-label="Filter by department"><button type="button" className={activeDepartment === "all" ? "is-active" : ""} onClick={() => setActiveDepartment("all")}>All items</button>{departments.map((department) => <button key={department.id} type="button" className={activeDepartment === department.id ? "is-active" : ""} onClick={() => setActiveDepartment(department.id)}>{department.name}</button>)}</div>
