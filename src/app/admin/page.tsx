@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { type DemoDepartment, type DemoProduct, formatBwp, readDemoCatalogue, saveDemoCatalogue, seedDepartments, seedProducts } from "@/lib/demo-catalogue";
 import "../shop.css";
 
-const emptyProduct = { name: "", departmentId: "fresh", description: "", unit: "each", price: "0.00", emoji: "🛒" };
+const emptyProduct = { name: "", departmentId: "spirits", description: "", unit: "each", price: "0.00", emoji: "🛒" };
 
 export default function AdminPage() {
   const [departments, setDepartments] = useState<DemoDepartment[]>(seedDepartments);
@@ -56,11 +56,11 @@ export default function AdminPage() {
   }
 
   return <main className="shop-admin-page">
-    <header className="shop-admin-header"><Link href="/" className="shop-admin-back">← Back to customer shop</Link><span className="shop-demo-pill">LOCAL DEMO WORKSPACE</span><h1>Catalogue<br/><em>management.</em></h1><p>Create departments and manage sample products to shape the customer browsing flow.</p></header>
+    <header className="shop-admin-header"><Link href="/" className="shop-admin-back">← Back to liquor shop</Link><span className="shop-demo-pill">LOCAL DEMO WORKSPACE</span><h1>Catalogue<br/><em>management.</em></h1><p>Manage synthetic liquor categories and test product listings for the Mogoditshane pilot.</p></header>
     <div className="shop-admin-warning" role="note"><strong>Prototype only.</strong> This workspace has no staff authentication and stores changes in this browser only. Do not enter real business data or treat it as a live store admin system.</div>
     <div className="shop-admin-layout">
       <section className="shop-admin-panel">
-        <div className="shop-admin-panel-heading"><span>01 / CATALOGUE</span><h2>{editingId ? "Edit product" : "Add a product"}</h2><p>Prices are illustrative BWP sample values.</p></div>
+        <div className="shop-admin-panel-heading"><span>01 / CATALOGUE</span><h2>{editingId ? "Edit product" : "Add a product"}</h2><p>All product names and BWP prices are synthetic test data.</p></div>
         <form className="shop-admin-form" onSubmit={saveProduct}>
           <label>Product name<input value={productForm.name} onChange={(e) => setProductForm({ ...productForm, name: e.target.value })} required maxLength={100}/></label>
           <label>Department<select value={productForm.departmentId} onChange={(e) => setProductForm({ ...productForm, departmentId: e.target.value })} required>{departments.map((department) => <option key={department.id} value={department.id}>{department.name}</option>)}</select></label>
