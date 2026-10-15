@@ -70,7 +70,7 @@ export default function AdminPage() {
         </form>
         <div className="shop-admin-divider"/>
         <div className="shop-admin-panel-heading"><span>02 / DEPARTMENTS</span><h2>Organise the shop</h2></div>
-        <form className="shop-department-form" onSubmit={addDepartment}><label className="sr-only" htmlFor="new-department">New department name</label><input id="new-department" value={departmentName} onChange={(e) => setDepartmentName(e.target.value)} placeholder="e.g. Frozen foods" maxLength={60} required/><button type="submit">Add department +</button></form>
+        <form className="shop-department-form" onSubmit={addDepartment}><label className="sr-only" htmlFor="new-department">New department name</label><input id="new-department" value={departmentName} onChange={(e) => setDepartmentName(e.target.value)} placeholder="e.g. Craft beer" maxLength={60} required/><button type="submit">Add department +</button></form>
         <ul className="shop-admin-department-list">{departments.map((department) => <li key={department.id}><span><strong>{department.name}</strong><small>{products.filter((item) => item.departmentId === department.id).length} products</small></span><button type="button" onClick={() => deleteDepartment(department)} disabled={products.some((item) => item.departmentId === department.id)} aria-label={"Remove empty department " + department.name}>Remove</button></li>)}</ul>
       </section>
       <section className="shop-admin-panel shop-admin-inventory">
