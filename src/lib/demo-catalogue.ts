@@ -10,28 +10,30 @@ export type DemoProduct = {
   available: boolean;
 };
 
-export const CATALOGUE_STORAGE_KEY = "sefalana-shop-collect:demo-catalogue:v1";
-export const BASKET_STORAGE_KEY = "sefalana-shop-collect:demo-basket:v1";
+export const CATALOGUE_STORAGE_KEY = "sefalana-shop-collect:demo-catalogue:v2";
+export const BASKET_STORAGE_KEY = "sefalana-shop-collect:demo-basket:v2";
 
 export const seedDepartments: DemoDepartment[] = [
-  { id: "fresh", name: "Fresh produce", description: "Fruit and vegetables" },
-  { id: "pantry", name: "Pantry", description: "Everyday cupboard essentials" },
-  { id: "dairy", name: "Dairy & eggs", description: "Chilled essentials" },
-  { id: "bakery", name: "Bakery", description: "Bread and baked goods" },
-  { id: "home", name: "Home care", description: "Household basics" },
+  { id: "beer-cider", name: "Beer & cider", description: "Illustrative beer and cider listings" },
+  { id: "wine", name: "Wine", description: "Illustrative red, white and sparkling wine listings" },
+  { id: "spirits", name: "Spirits", description: "Illustrative whisky, vodka, gin and other spirit listings" },
+  { id: "ready-to-drink", name: "Ready to drink", description: "Illustrative premixed drinks and coolers" },
+  { id: "mixers", name: "Mixers & alcohol-free", description: "Mixers and non-alcoholic alternatives" },
 ];
 
 export const seedProducts: DemoProduct[] = [
-  { id: "demo-apple", departmentId: "fresh", name: "Apples", description: "Sample fresh fruit listing", unit: "per kg", price: 24.9, emoji: "🍎", available: true },
-  { id: "demo-bananas", departmentId: "fresh", name: "Bananas", description: "Sample fresh fruit listing", unit: "per bunch", price: 18.5, emoji: "🍌", available: true },
-  { id: "demo-tomatoes", departmentId: "fresh", name: "Tomatoes", description: "Sample fresh produce listing", unit: "per kg", price: 22, emoji: "🍅", available: true },
-  { id: "demo-rice", departmentId: "pantry", name: "Long-grain rice", description: "Sample pantry listing", unit: "2 kg bag", price: 34.9, emoji: "🍚", available: true },
-  { id: "demo-oil", departmentId: "pantry", name: "Cooking oil", description: "Sample pantry listing", unit: "2 L bottle", price: 49.9, emoji: "🫗", available: true },
-  { id: "demo-beans", departmentId: "pantry", name: "Baked beans", description: "Sample pantry listing", unit: "410 g tin", price: 12.5, emoji: "🥫", available: true },
-  { id: "demo-milk", departmentId: "dairy", name: "Full cream milk", description: "Sample chilled listing", unit: "1 L carton", price: 16.9, emoji: "🥛", available: true },
-  { id: "demo-eggs", departmentId: "dairy", name: "Eggs", description: "Sample chilled listing", unit: "dozen", price: 32, emoji: "🥚", available: true },
-  { id: "demo-bread", departmentId: "bakery", name: "Brown bread", description: "Sample bakery listing", unit: "loaf", price: 14.5, emoji: "🍞", available: true },
-  { id: "demo-soap", departmentId: "home", name: "Laundry powder", description: "Sample home-care listing", unit: "1 kg pack", price: 29.9, emoji: "🧺", available: true },
+  { id: "demo-lager", departmentId: "beer-cider", name: "Lager beer (illustrative)", description: "Synthetic test listing. Not a live brand, price or stock record.", unit: "6-pack", price: 79.9, emoji: "🍺", available: true },
+  { id: "demo-beer-case", departmentId: "beer-cider", name: "Lager beer (illustrative case)", description: "Synthetic test listing for testing larger pack sizes.", unit: "case", price: 289.9, emoji: "🍻", available: true },
+  { id: "demo-cider", departmentId: "beer-cider", name: "Apple cider (illustrative)", description: "Synthetic test listing. Not a live brand, price or stock record.", unit: "6-pack", price: 89.9, emoji: "🍏", available: true },
+  { id: "demo-red-wine", departmentId: "wine", name: "Red wine (illustrative)", description: "Synthetic test listing for the wine category.", unit: "750 ml bottle", price: 99.9, emoji: "🍷", available: true },
+  { id: "demo-white-wine", departmentId: "wine", name: "White wine (illustrative)", description: "Synthetic test listing for the wine category.", unit: "750 ml bottle", price: 94.9, emoji: "🥂", available: true },
+  { id: "demo-sparkling-wine", departmentId: "wine", name: "Sparkling wine (illustrative)", description: "Synthetic test listing for celebrations and gifting.", unit: "750 ml bottle", price: 149.9, emoji: "🥂", available: true },
+  { id: "demo-whisky", departmentId: "spirits", name: "Blended whisky (illustrative)", description: "Synthetic test listing. Not a live brand, price or stock record.", unit: "750 ml bottle", price: 229.9, emoji: "🥃", available: true },
+  { id: "demo-vodka", departmentId: "spirits", name: "Vodka (illustrative)", description: "Synthetic test listing for the spirits category.", unit: "750 ml bottle", price: 189.9, emoji: "🍸", available: true },
+  { id: "demo-gin", departmentId: "spirits", name: "Gin (illustrative)", description: "Synthetic test listing for the spirits category.", unit: "750 ml bottle", price: 219.9, emoji: "🍸", available: true },
+  { id: "demo-cooler", departmentId: "ready-to-drink", name: "Premixed spirit cooler (illustrative)", description: "Synthetic test listing for ready-to-drink products.", unit: "6-pack", price: 99.9, emoji: "🍹", available: true },
+  { id: "demo-tonic", departmentId: "mixers", name: "Tonic water", description: "Synthetic non-alcoholic mixer listing.", unit: "1 L bottle", price: 19.9, emoji: "🫧", available: true },
+  { id: "demo-sparkling-water", departmentId: "mixers", name: "Sparkling water", description: "Synthetic non-alcoholic mixer listing.", unit: "1 L bottle", price: 14.9, emoji: "💧", available: true },
 ];
 
 export function readDemoCatalogue(): { departments: DemoDepartment[]; products: DemoProduct[] } {
