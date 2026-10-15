@@ -8,7 +8,7 @@ A mobile-first prototype exploring liquor-category browsing, a local basket and 
 
 - Customer storefront at `/`: browse liquor categories, search synthetic products, add/remove quantities, and review a sample basket.
 - Catalogue workspace at `/admin`: add departments; add, edit, hide/publish and delete sample products.
-- Demo catalogue and basket use this browser's local storage. Changes are not shared across devices and are not persisted to a server.
+- Demo catalogue and basket use versioned browser-local storage. The v2 namespace starts returning visitors on the liquor sample catalogue instead of their previous grocery demo; changes remain local to each browser and are not shared across devices or persisted to a server.
 - The collection-request continuation deliberately explains that no order is submitted or collection slot booked.
 - PWA metadata, app icon and service-worker cache namespace have been reset for Shop & Collect.
 - Inherited operations login is disabled until dedicated staff authentication is implemented.
