@@ -48,7 +48,7 @@ export default function HomePage() {
     </header>
     <section className="shop-hero">
       <div className="shop-hero-copy"><p className="shop-eyebrow">THE MOGODITSHANE LIQUOR PILOT</p><h1>Your drinks shop,<br/><em>made simpler.</em></h1><p>Explore the liquor range, build a basket, and review a collection request concept for Sefalana Mogoditshane.</p><a className="shop-primary-link" href="#shop-products">Browse the range <span aria-hidden="true">↓</span></a></div>
-      <div className="shop-hero-art" aria-hidden="true"><span className="shop-art-sun"/><span className="shop-art-bag">🛍️</span><span className="shop-art-fruit shop-art-fruit-one">🍊</span><span className="shop-art-fruit shop-art-fruit-two">🥬</span><span className="shop-art-fruit shop-art-fruit-three">🍞</span><span className="shop-art-caption">PLAN · PICK · COLLECT</span></div>
+      <div className="shop-hero-art" aria-hidden="true"><span className="shop-art-sun"/><span className="shop-art-bag">🛍️</span><span className="shop-art-fruit shop-art-fruit-one">🍇</span><span className="shop-art-fruit shop-art-fruit-two">🍾</span><span className="shop-art-fruit shop-art-fruit-three">🥃</span><span className="shop-art-caption">PLAN · PICK · COLLECT</span></div>
     </section>
     <section className="shop-benefits" aria-label="How the concept works">
       <article><span>01</span><div><strong>Explore the range</strong><p>Browse sample beer, cider, wine, spirits and mixer categories.</p></div></article>
