@@ -2,7 +2,7 @@
 
 ## 1. Product and authority
 
-Build a polished, mobile-first grocery shopping and fulfilment PWA for a proposed pilot at Sefalana Hyper Mogoditshane.
+Build a polished, mobile-first liquor-category shopping and collection-planning PWA for a proposed pilot with the Sefalana Mogoditshane liquor department. Do not assume whether the intended outlet is Block 2, Block 4 or the Hyper branch; confirm the authorized pilot location.
 
 Working name: Sefalana Shop & Collect. This is a provisional project name, not proof of Sefalana authorization. Do not claim official endorsement, ownership, integration, live inventory access, approved delivery service, or access to internal systems without evidence and permission.
 
@@ -19,7 +19,7 @@ The customer journey is:
 DISCOVER → BROWSE → SELECT → CHOOSE FULFILMENT → SUBMIT → RECEIVE CONFIRMATION → TRACK → COLLECT/RECEIVE → RETURN.
 
 Customers must be able to:
-- Browse and search products by department/category.
+- Browse and search liquor products by category (beer, cider, wine, spirits, ready-to-drink and mixers).
 - View product names, images, descriptions where available, prices, units and explicit availability.
 - Add products and quantities to a basket; edit quantities and remove items.
 - Choose collection or request delivery when delivery is enabled for their area.
@@ -47,7 +47,7 @@ Department creation and product creation must be connected: a product belongs to
 
 Use validated server-side writes. A hidden admin button or client-only route guard is not authorization. Protect upload, create, edit, archive and delete operations at the server/database boundary.
 
-Do not invent real catalogue items, prices, specials, images, barcodes or stock. Any development fixtures must be synthetic and clearly marked as test data. A manually maintained availability flag is not live inventory integration.
+Do not invent real catalogue items, prices, specials, images, barcodes or stock. Current liquor products and prices are synthetic fixtures and must remain clearly marked as test data. Liquor sales are for adults 18+ only; this prototype does not verify age or submit orders. A real pilot requires branch-approved age checks, including at handover, and compliance review. A manually maintained availability flag is not live inventory integration.
 
 ## 4. Prices, availability and order integrity
 
@@ -79,7 +79,7 @@ Generate only slots that fit the configured service window and leave enough time
 
 Revalidate the selected slot, operating rules, capacity and order on the server when submitting. Prevent concurrent requests from exceeding capacity. A slot displayed to a customer is not reserved until the server confirms it.
 
-Starting reference only: the official Sefalana Hyper Mogoditshane listing currently shows Monday–Saturday 08:00–20:00 and Sunday 08:00–18:00. The general Hyper page gives different standard hours and says branches may vary. Treat the branch-specific listing as provisional; make hours configurable and obtain branch confirmation before launch. Do not assume these are the approved shopping-service hours or cutoffs.
+Official Sefalana listings show separate liquor outlets in Mogoditshane (Block 2 and Block 4), distinct from Sefalana Hyper Mogoditshane. The exact intended pilot outlet and its approved hours must be confirmed with the branch; do not silently assume a branch, operating window or collection cutoff. See https://www.sefalana.co.bw/stores?type=liquor.
 
 Official references:
 - https://www.sefalana.co.bw/stores?store=sefalana-hyper-mogoditshane
@@ -120,6 +120,9 @@ Define least-privilege roles for at least branch manager, catalogue management a
 - Keep admin access discreet but discoverable to authorized staff; do not use an unprotected secret URL or client-side-only password as the security boundary.
 
 ## 8. Branch policy and business assumptions
+
+For the liquor pilot, age restriction and responsible-sale controls are mandatory business requirements. Botswana's Liquor Act section 32 restricts sale/delivery of intoxicating liquor to persons under 18. This demo has no age-verification or handover workflow and must not be treated as capable of accepting real liquor orders. Official references: https://www.gov.bw/sites/default/files/2020-03/LIQUOR%20ACT.pdf and https://www.sefalana.co.bw/our-stores/liquor.
+
 
 This is a proposed branch pilot. Confirm with the authorized branch/company representative before treating any of these as settled:
 - Brand, logo, product images and use of company marks.
@@ -208,7 +211,7 @@ Confirmed pushed foundation checkpoints:
 Initial customer/admin prototype and identity-reset changes have since been committed directly to `main` through GitHub's file API. The exact current branch head must be rechecked before reporting the final checkpoint.
 
 Implemented at source level:
-- Customer storefront with synthetic sample departments/products, search, department filters, quantity controls and a browser-local basket.
+- Customer storefront with synthetic liquor departments/products, search, department filters, quantity controls and a browser-local basket. Storage namespace v2 resets prior grocery demo catalogues and baskets for returning browsers.
 - `/admin` prototype for creating departments and adding/editing/hiding/publishing/deleting sample products.
 - Clear demo-only disclaimers; the basket continuation does not submit an order.
 - Updated package name, page metadata, manifest, icon, offline screen, service-worker cache namespace and identity verification script. Legacy The Plug service-worker caches are deleted on activation.
@@ -219,7 +222,7 @@ Implemented at source level:
 Important gaps:
 - Catalogue and basket data are browser-local only; there is no shared backend persistence.
 - The admin prototype is not authenticated or authorized. It must not be used with real catalogue, prices or customer data.
-- Product images are symbolic placeholders. Sample prices and availability are synthetic.
+- Product images are symbolic placeholders. Liquor product names, sample prices and availability are synthetic.
 - No order submission, collection slot generation, staff fulfilment queue, image upload, payment, live stock integration or customer notifications are implemented.
 - Full inherited route/data/security review and deployment/runtime validation remain outstanding.
 
