@@ -1,15 +1,15 @@
 # Shop & Collect — Sefalana branch pilot concept
 
-A mobile-first prototype exploring a grocery browsing and collection-planning flow for a proposed Mogoditshane branch pilot.
+A mobile-first prototype exploring liquor-category browsing, a local basket and collection-request planning for a proposed Sefalana Mogoditshane liquor-department pilot.
 
-**This repository is a concept, not an official Sefalana service.** Sample products and BWP prices are synthetic development fixtures, not store catalogue, live stock, current prices, promotions, or a confirmed collection service.
+**This repository is a concept, not an official Sefalana service.** The beer, cider, wine, spirits and mixer listings and BWP prices are synthetic development fixtures, not real brands, store catalogue, live stock, current prices, promotions, or a confirmed collection service. Liquor is for adults aged 18+ only.
 
 ## Current prototype
 
-- Customer storefront at `/`: browse departments, search sample products, add/remove quantities, and review a sample basket.
+- Customer storefront at `/`: browse liquor categories, search synthetic products, add/remove quantities, and review a sample basket.
 - Catalogue workspace at `/admin`: add departments; add, edit, hide/publish and delete sample products.
 - Demo catalogue and basket use this browser's local storage. Changes are not shared across devices and are not persisted to a server.
-- The checkout continuation deliberately explains that no order is submitted.
+- The collection-request continuation deliberately explains that no order is submitted or collection slot booked.
 - PWA metadata, app icon and service-worker cache namespace have been reset for Shop & Collect.
 - Inherited operations login is disabled until dedicated staff authentication is implemented.
 
@@ -28,6 +28,12 @@ npx tsc --noEmit
 npm run lint
 npm run build
 ```
+
+## Liquor pilot safety note
+
+The Botswana Liquor Act restricts sale/delivery of intoxicating liquor to persons under 18. This prototype does not perform age verification, submit orders, verify stock, or book collection. Before any real pilot, the branch must approve product data, legal/compliance controls, operating hours, age checks at handover, collection workflow and customer data handling.
+
+Official references: [Sefalana Liquor](https://www.sefalana.co.bw/our-stores/liquor) · [Botswana Liquor Act](https://www.gov.bw/sites/default/files/2020-03/LIQUOR%20ACT.pdf)
 
 ## PWA install verification
 
