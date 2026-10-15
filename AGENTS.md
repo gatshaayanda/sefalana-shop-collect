@@ -223,7 +223,8 @@ Important gaps:
 - Catalogue and basket data are browser-local only; there is no shared backend persistence.
 - The admin prototype is not authenticated or authorized. It must not be used with real catalogue, prices or customer data.
 - Product images are symbolic placeholders. Liquor product names, sample prices and availability are synthetic.
-- No order submission, collection slot generation, staff fulfilment queue, image upload, payment, live stock integration or customer notifications are implemented.
+- Store-reference photography is wired to `/public/images/sef1.jpeg`, `sef2.jpeg` and `sef3.jpeg`; image files must be added from the product owner's local Downloads folder before the new visual section can render. Product image upload is not yet enabled in the admin UI. UploadThing's inherited route currently has no verified staff authorization, so do not expose upload controls until an authenticated admin boundary is implemented and tested.
+- No order submission, collection slot generation, staff fulfilment queue, payment, live stock integration or customer notifications are implemented.
 - Full inherited route/data/security review and deployment/runtime validation remain outstanding.
 
 Verification status at this checkpoint:
