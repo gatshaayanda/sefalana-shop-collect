@@ -1,11 +1,10 @@
 {
   "id": "/",
-  "name": "Shop & Collect | Grocery Shopping",
+  "name": "Sefalana Shop & Collect | Liquor Department Pilot",
   "short_name": "Shop & Collect",
-  "description": "A proposed grocery shopping and collection concept for Mogoditshane.",
+  "description": "A proposed liquor department shopping and collection pilot concept for Sefalana Mogoditshane.",
   "categories": [
-    "shopping",
-    "food"
+    "shopping"
   ],
   "start_url": "/",
   "scope": "/",
