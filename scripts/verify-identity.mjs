@@ -26,7 +26,7 @@ if (!failures.length) {
   const pkg = JSON.parse(read("package.json"));
   const manifest = JSON.parse(read("public/manifest.webmanifest"));
   if (pkg.name !== "sefalana-shop-collect") failures.push("package.json: incorrect package name");
-  if (manifest.name !== "Shop & Collect | Grocery Shopping") failures.push("manifest: incorrect app name");
+  if (manifest.name !== "Sefalana Shop & Collect | Liquor Department Pilot") failures.push("manifest: incorrect app name");
   if (manifest.short_name !== "Shop & Collect") failures.push("manifest: incorrect short name");
   if (manifest.theme_color !== "#1f5b43") failures.push("manifest: incorrect theme color");
   if (!manifest.icons?.some((icon) => icon.src === "/icon.svg" && icon.purpose === "any")) failures.push("manifest: standard app icon missing");
