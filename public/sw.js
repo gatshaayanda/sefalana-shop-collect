@@ -37,7 +37,13 @@ try {
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   const rawLink = event.notification.data?.link || "/";
-  const link = rawLink.startsWith("/") ? rawLink : "/";
+  let link = "/";
+  try {
+    const target = new URL(rawLink, self.location.origin);
+    if (target.origin === self.location.origin) link = target.pathname + target.search + target.hash;
+  } catch {
+    link = "/";
+  }
   event.waitUntil(clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
     for (const client of list) {
       if ("focus" in client) {
