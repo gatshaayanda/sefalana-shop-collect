@@ -347,3 +347,67 @@
   .shop-page .shop-mobile-basket-copy strong{font-size:11px}
   .shop-page .shop-mobile-basket-total{font-size:11px}
 }
+
+
+/* Basket panel clipping fix: keep the disclosure control and totals readable on narrow screens. */
+.shop-page .shop-basket-panel{
+  width:calc(100% - 32px);
+  max-width:1184px;
+  min-width:0;
+  box-sizing:border-box;
+}
+.shop-page .shop-basket-head{
+  min-width:0;
+  flex-wrap:wrap;
+  align-items:flex-start;
+}
+.shop-page .shop-basket-head>div{
+  flex:1 1 220px;
+  min-width:0;
+  max-width:100%;
+}
+.shop-page .shop-basket-head h2{
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+.shop-page .shop-basket-head>button.shop-basket-toggle{
+  width:auto;
+  min-width:max-content;
+  max-width:100%;
+  flex:0 0 auto;
+  height:auto;
+  white-space:nowrap;
+}
+.shop-page .shop-basket-total{
+  width:100%;
+  min-width:0;
+  align-items:flex-start;
+}
+.shop-page .shop-basket-total>span{
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+.shop-page .shop-basket-total>strong{
+  flex:0 0 auto;
+  max-width:100%;
+  white-space:nowrap;
+  overflow-wrap:normal;
+}
+.shop-page .shop-basket-disclaimer{
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+@media(max-width:360px){
+  .shop-page .shop-basket-panel{
+    width:calc(100% - 20px);
+    padding:14px 12px;
+  }
+  .shop-page .shop-basket-head>div{
+    flex-basis:100%;
+  }
+  .shop-page .shop-basket-head>button.shop-basket-toggle{
+    min-height:38px;
+  }
+}
