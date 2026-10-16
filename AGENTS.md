@@ -298,3 +298,16 @@ Verification at checkpoint:
 - Identity verifier, TypeScript, lint, production build: NOT RUN in a project runtime.
 - Browser offline/online toggle, cold offline launch, Cache Storage inspection, real-device install, push receipt and deployed smoke test: NOT RUN.
 - Deployment state: check Vercel separately; a source push is not proof of a successful build or live behavior.
+
+
+## 17. Basket narrow-screen clipping fix — 2026-10-16
+
+Commit `5ee8c4dbba1d585a12877bdc8b340e2dc5083598` adds a scoped CSS correction in `src/app/shop.css`:
+- The basket disclosure button now overrides the inherited fixed 40px button width, so “Show items ↓” / “Hide items ↑” can render at their natural readable width.
+- Basket header content can wrap without pushing the count/control off-screen.
+- The basket panel, sample subtotal, and disclaimer are constrained to the viewport; subtotal values remain unbroken and the disclaimer wraps.
+- The narrowest breakpoint uses smaller panel gutters.
+
+Scope is intentionally limited to the basket layout; catalogue content, product styling, basket state/logic, prices, and disclaimer wording are unchanged.
+
+Verification status: source change pushed directly to `main`; no browser viewport or physical-device test has been run for this specific fix. Check deployed behavior at 320px, 360px, 390px and a desktop width before claiming visual PASS.
