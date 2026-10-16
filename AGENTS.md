@@ -285,7 +285,7 @@ Verification status at checkpoint: source change pushed directly to `main` as re
 ## 15. Offline/PWA hardening checkpoint — 2026-10-16
 
 Source changes pushed directly to `main`:
-- `public/sw.js`: Firebase Messaging imports are fail-soft so a CDN/config outage does not prevent the core worker from installing; shell precaching errors no longer abort installation; the worker accepts an explicit `PRECACHE_SHELL` retry; only the public storefront and offline screen are eligible for navigation caching. Admin/private routes remain network-only and fall back to the offline screen.
+- `public/sw.js`: Firebase Messaging imports are fail-soft so a CDN/config outage does not prevent the core worker from installing; shell precaching errors no longer abort installation; the worker accepts an explicit `PRECACHE_SHELL` retry; only the public storefront and offline screen are eligible for navigation caching. Admin/private routes remain network-only and fall back to the offline screen. Push notification links are constrained to the app's own origin.
 - `src/app/pwa-register.tsx`: on reconnection, request a service-worker update and retry shell precaching.
 - `public/manifest.webmanifest`: corrected the inherited grocery identity to the proposed liquor-department pilot identity.
 - `scripts/verify-identity.mjs`: identity verifier now expects the corrected manifest name.
