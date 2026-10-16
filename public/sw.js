@@ -1,8 +1,12 @@
-importScripts(
-  "https://www.gstatic.com/firebasejs/11.9.0/firebase-app-compat.js",
-  "https://www.gstatic.com/firebasejs/11.9.0/firebase-messaging-compat.js",
-  "/api/firebase/messaging-sw-config"
-);
+// Messaging is an optional online enhancement. A CDN/config outage must not prevent
+// the core service worker from installing and serving its offline shell.
+try {
+  importScripts("https://www.gstatic.com/firebasejs/11.9.0/firebase-app-compat.js");
+  importScripts("https://www.gstatic.com/firebasejs/11.9.0/firebase-messaging-compat.js");
+  importScripts("/api/firebase/messaging-sw-config");
+} catch (error) {
+  console.warn("Shop & Collect messaging is unavailable until the service worker updates online.", error);
+}
 
 let shopCollectMessaging = null;
 try {
@@ -54,7 +58,10 @@ const APP_SHELL = ["/", "/offline", "/icon.svg", "/sefalana-shop-collect-icon.sv
 
 self.addEventListener("install", event => {
   event.waitUntil((async () => {
-    await precacheShell();
+    // Do not fail worker installation just because a cache write or optional request
+    // failed. An online page can explicitly retry shell precaching after reconnection.
+    try { await precacheShell(); }
+    catch (error) { console.warn("Shop & Collect shell precache will retry when online.", error); }
     // Install the new routing/cache policy immediately; the page is not force-reloaded.
     await self.skipWaiting();
   })());
@@ -86,6 +93,11 @@ async function precacheShell() {
 
 self.addEventListener("message", event => {
   if (event.data?.type === "SKIP_WAITING") self.skipWaiting();
+  if (event.data?.type === "PRECACHE_SHELL") {
+    event.waitUntil(precacheShell().catch(error => {
+      console.warn("Shop & Collect shell precache retry failed.", error);
+    }));
+  }
 });
 
 self.addEventListener("activate", event => {
@@ -104,6 +116,7 @@ self.addEventListener("fetch", event => {
 
   const isNavigation = request.mode === "navigate" || request.headers.get("accept")?.includes("text/html");
   const isPrivate = /^\/(?:account|requests|orders|admin|invite)(?:\/|$)/.test(url.pathname);
+  const isPublicShellPage = url.pathname === "/" || url.pathname === "/offline";
 
   // Private/member routes are network-only. Never serve a cached account/request page as
   // a substitute for a different route or when the authenticated page cannot be fetched.
@@ -124,16 +137,16 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  if (isNavigation) {
+  if (isNavigation && isPublicShellPage) {
     event.respondWith(fetch(request).then(response => {
       if (response.ok) void caches.open(SHELL_CACHE).then(async cache => {
         await cache.put(request, response.clone());
         await trimCache(SHELL_CACHE, PUBLIC_PAGE_LIMIT + STATIC_LIMIT);
-      });
+      }).catch(error => console.warn("Shop & Collect page cache write failed.", error));
       return response;
     }).catch(async () => {
       const cache = await caches.open(SHELL_CACHE);
-      return await cache.match(request) || await cache.match("/") || await cache.match("/offline") || Response.error();
+      return await cache.match(request) || await cache.match(url.pathname) || await cache.match("/") || await cache.match("/offline") || Response.error();
     }));
   }
 });
