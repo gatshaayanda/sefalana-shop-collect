@@ -242,3 +242,29 @@ After meaningful work:
 - Push only when authorized. Do not deploy unless explicitly requested.
 
 Final checkpoint reports must state repository, branch, commit, changed files, verification evidence, deployment state, unresolved issues and next action.
+
+
+## 14. Storefront shopping hierarchy and interaction feedback
+
+The customer storefront must feel like a shop, not a long proposal or editorial landing page. Preserve the established brand styling and supplied store photography while prioritizing shopping actions:
+- Keep the concept-preview/18+ sample-data disclosure visible.
+- Use a compact welcome hero; place category filters, search and product cards before the longer store story and how-it-works explanation.
+- Product cards must make the product name, pack/unit, Botswana pula price (displayed with a clear `P` prefix), and an obvious Add action easy to scan.
+- Keep the basket control in the header visibly actionable (icon, explicit “View basket” wording, count and directional cue). It must open and scroll to the basket review section.
+- When the basket has items on mobile, show a fixed, accessible basket summary with item count, sample subtotal and explicit “Tap to review basket” guidance. It must not obscure the page content or product controls.
+- Provide short, accessible confirmation feedback for add/quantity changes. Loading or transition animation must be brief and must not imply a network request or order submission when none exists.
+- Preserve category/search behavior, local basket persistence, quantity controls and the truthful non-live-ordering disclaimers. Do not imply that basket review submits an order.
+- Keep keyboard focus visible, use accessible names and live status feedback, and respect reduced-motion preferences when adding animation.
+
+## 15. Storefront redesign checkpoint — 2026-10-16
+
+A controlled storefront shopping-flow change is in progress on branch `feat/storefront-shopping-flow`; do not describe it as merged or deployed until verified.
+
+Planned/changed source files:
+- `src/app/page.tsx`: compact hero; product discovery moved ahead of store-story/how-it-works content; explicit header basket action; basket review scroll target; mobile basket summary; transient add/quantity toast and add-button feedback.
+- `src/app/shop.css`: clear basket affordance, responsive two-column mobile product grid, sticky basket summary, toast/feedback animations and responsive spacing.
+- `src/lib/demo-catalogue.ts`: format illustrative prices as Botswana pula with a `P` prefix.
+
+Known limits remain unchanged: the catalogue and basket are browser-local, products/prices are synthetic, and no real order, age verification, stock, collection slot or delivery workflow is connected.
+
+Verification at this checkpoint: remote source edits only. Local TypeScript/lint/build, browser interaction tests, real-device tests and deployed behavior are NOT RUN. Before merge, retrieve and inspect the full diff; run project checks in a usable runtime; verify mobile and desktop basket navigation, category/search, quantity/subtotal updates, persistence, accessibility, and animation behavior. If checks cannot run, report the precise blocker and do not claim PASS.
