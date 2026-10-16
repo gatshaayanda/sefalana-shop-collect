@@ -281,3 +281,20 @@ Acceptance criteria:
 - Existing product discovery, basket, analytics/PWA and admin behavior remain unchanged.
 
 Verification status at checkpoint: source change pushed directly to `main` as requested. Automated workflow, production deployment, browser viewport matrix and physical-device tests are NOT RUN until their results are retrieved. Do not claim visual verification from CSS inspection alone.
+
+## 15. Offline/PWA hardening checkpoint — 2026-10-16
+
+Source changes pushed directly to `main`:
+- `public/sw.js`: Firebase Messaging imports are fail-soft so a CDN/config outage does not prevent the core worker from installing; shell precaching errors no longer abort installation; the worker accepts an explicit `PRECACHE_SHELL` retry; only the public storefront and offline screen are eligible for navigation caching. Admin/private routes remain network-only and fall back to the offline screen.
+- `src/app/pwa-register.tsx`: on reconnection, request a service-worker update and retry shell precaching.
+- `public/manifest.webmanifest`: corrected the inherited grocery identity to the proposed liquor-department pilot identity.
+- `scripts/verify-identity.mjs`: identity verifier now expects the corrected manifest name.
+
+Offline contract: previously cached storefront shell/static assets and this browser's local demo catalogue/basket may remain usable after an initial successful online load. Fresh stock/prices, server APIs, authenticated actions, notifications and any real order/fulfilment operations are not guaranteed offline; the concept has no real order submission or shared backend. Push delivery itself requires the platform/device to be able to receive it. Do not describe the entire service as identical offline.
+
+Verification at checkpoint:
+- Source changes and individual GitHub commits: PASS (pushed to `main`).
+- Source-level review of the intended guards: PASS.
+- Identity verifier, TypeScript, lint, production build: NOT RUN in a project runtime.
+- Browser offline/online toggle, cold offline launch, Cache Storage inspection, real-device install, push receipt and deployed smoke test: NOT RUN.
+- Deployment state: check Vercel separately; a source push is not proof of a successful build or live behavior.
