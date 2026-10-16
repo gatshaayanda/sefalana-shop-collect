@@ -97,12 +97,18 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
       }
     };
 
+    let registration: ServiceWorkerRegistration | null = null;
     const online = () => {
       setOffline(false);
       setReconnecting(true);
+      // Rebuild the offline shell after connectivity returns, including when the first
+      // service-worker installation happened while some shell requests were unavailable.
+      void registration?.update().catch(() => {});
+      registration?.active?.postMessage({ type: "PRECACHE_SHELL" });
       window.setTimeout(() => {
         setReconnecting(false);
         void retryPendingOrderNotifications();
+        registration?.active?.postMessage({ type: "PRECACHE_SHELL" });
       }, 1200);
     };
     const off = () => {
@@ -166,7 +172,6 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
     window.addEventListener("shop-collect-open-install", requestInstall);
     window.addEventListener("appinstalled", appInstalled);
 
-    let registration: ServiceWorkerRegistration | null = null;
     const inspect = () => {
       if (registration?.waiting && navigator.serviceWorker.controller) setUpdateReady(registration.waiting);
     };
