@@ -268,3 +268,16 @@ Planned/changed source files:
 Known limits remain unchanged: the catalogue and basket are browser-local, products/prices are synthetic, and no real order, age verification, stock, collection slot or delivery workflow is connected.
 
 Verification at this checkpoint: remote source edits only. Local TypeScript/lint/build, browser interaction tests, real-device tests and deployed behavior are NOT RUN. Before merge, retrieve and inspect the full diff; run project checks in a usable runtime; verify mobile and desktop basket navigation, category/search, quantity/subtotal updates, persistence, accessibility, and animation behavior. If checks cannot run, report the precise blocker and do not claim PASS.
+
+
+## 16. Cross-device responsive layout guard — 2026-10-16
+
+Commit `c67c9a97d8eb2f62ca6e834c96d54d1ab077ca2b` adds scoped storefront/staff-workspace responsive guards in `src/app/shop.css`: viewport-bounded containers, min-width safeguards for grid/flex children, bounded media, mobile heading and header sizing, responsive basket summary safe-area spacing, and a single-column staff layout below tablet width. It also adds a narrow-screen breakpoint for devices at or below 360px.
+
+Acceptance criteria:
+- No page-level horizontal overflow or black/dead strip at 320px, 360px, 390px, tablet, and desktop widths.
+- Main hero heading, header actions, search, product grid, basket controls and staff forms remain fully visible and operable.
+- Horizontal scrolling remains intentional only for the category-chip row.
+- Existing product discovery, basket, analytics/PWA and admin behavior remain unchanged.
+
+Verification status at checkpoint: source change pushed directly to `main` as requested. Automated workflow, production deployment, browser viewport matrix and physical-device tests are NOT RUN until their results are retrieved. Do not claim visual verification from CSS inspection alone.
