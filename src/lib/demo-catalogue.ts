@@ -54,5 +54,5 @@ export function saveDemoCatalogue(value: { departments: DemoDepartment[]; produc
 }
 
 export function formatBwp(value: number) {
-  return new Intl.NumberFormat("en-BW", { style: "currency", currency: "BWP", minimumFractionDigits: 2 }).format(value);
+  return `P ${new Intl.NumberFormat("en-BW", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value)}`;
 }
