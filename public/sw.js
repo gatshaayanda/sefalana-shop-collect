@@ -60,7 +60,7 @@ const MEDIA_CACHE = "shop-collect-media-v1";
 const SHELL_CACHE = CACHE_VERSION;
 const STATIC_LIMIT = 100;
 const PUBLIC_PAGE_LIMIT = 12;
-const APP_SHELL = ["/", "/offline", "/icon.svg", "/sefalana-shop-collect-icon.svg", "/shop-collect-icon-192.png", "/shop-collect-icon-512.png", "/apple-touch-icon.png", "/manifest.webmanifest"];
+const APP_SHELL = ["/", "/offline", "/admin", "/icon.svg", "/sefalana-shop-collect-icon.svg", "/shop-collect-icon-192.png", "/shop-collect-icon-512.png", "/apple-touch-icon.png", "/manifest.webmanifest"];
 
 self.addEventListener("install", event => {
   event.waitUntil((async () => {
@@ -121,13 +121,32 @@ self.addEventListener("fetch", event => {
   if (url.pathname.startsWith("/api/")) return;
 
   const isNavigation = request.mode === "navigate" || request.headers.get("accept")?.includes("text/html");
-  const isPrivate = /^\/(?:account|requests|orders|admin|invite)(?:\/|$)/.test(url.pathname);
+  const isPrivate = /^\/(?:account|requests|orders|invite)(?:\/|$)/.test(url.pathname);
+  const isAdminShellPage = /^\/admin(?:\/|$)/.test(url.pathname);
   const isPublicShellPage = url.pathname === "/" || url.pathname === "/offline";
 
-  // Private/member routes are network-only. Never serve a cached account/request page as
-  // a substitute for a different route or when the authenticated page cannot be fetched.
+  // Account, request and order routes remain network-only. Never serve a cached
+  // private page as a substitute for a different route or when authentication fails.
   if (isNavigation && isPrivate) {
     event.respondWith(fetch(request).catch(() => caches.open(SHELL_CACHE).then(cache => cache.match("/offline")).then(response => response || Response.error())));
+    return;
+  }
+
+  // /admin is currently an explicitly labelled, browser-local demo workspace (not a
+  // protected production admin). Cache its own route so its localStorage-backed forms
+  // can reopen offline after a successful online visit. Never substitute /admin for
+  // another route, and never cache its API requests or private account/order routes.
+  if (isNavigation && isAdminShellPage) {
+    event.respondWith(fetch(request).then(response => {
+      if (response.ok) void caches.open(SHELL_CACHE).then(async cache => {
+        await cache.put(request, response.clone());
+        await trimCache(SHELL_CACHE, PUBLIC_PAGE_LIMIT + STATIC_LIMIT);
+      }).catch(error => console.warn("Shop & Collect admin shell cache write failed.", error));
+      return response;
+    }).catch(async () => {
+      const cache = await caches.open(SHELL_CACHE);
+      return await cache.match(request) || await cache.match(url.pathname) || await cache.match("/offline") || Response.error();
+    }));
     return;
   }
 
