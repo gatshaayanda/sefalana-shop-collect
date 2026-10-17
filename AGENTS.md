@@ -311,3 +311,16 @@ Commit `5ee8c4dbba1d585a12877bdc8b340e2dc5083598` adds a scoped CSS correction i
 Scope is intentionally limited to the basket layout; catalogue content, product styling, basket state/logic, prices, and disclaimer wording are unchanged.
 
 Verification status: source change pushed directly to `main`; no browser viewport or physical-device test has been run for this specific fix. Check deployed behavior at 320px, 360px, 390px and a desktop width before claiming visual PASS.
+
+
+## 18. Offline admin shell correction — 2026-10-17
+
+Commit `4bd7b3142b69ebabbc6238b3a6c26934e455a05c` updates `public/sw.js` so the browser-local `/admin` demo is included in the install-time shell precache and is cached after a successful online visit. When offline, direct navigation to `/admin` now falls back to its own cached route instead of being classified with network-only account/order routes. Account, request, order and invite pages remain network-only; API requests remain excluded from the public cache.
+
+Scope and safety:
+- This only makes the existing prototype admin interface and its browser-local demo catalogue available offline on that same device after the route has been cached. It does not create shared persistence, staff authentication, server authorization, or real administration capability.
+- `/admin` remains an unauthenticated demo and must not be used for real business data.
+- Installation-time precaching can only cache the route if the deployment successfully serves it when precaching runs. A route cache miss falls back to the offline screen; no route is fabricated.
+- Source inspection: PASS for the intended route policy in `public/sw.js`.
+- GitHub write to `main`: PASS.
+- TypeScript/lint/build, browser offline toggle, cold offline launch, admin form persistence after offline reload, Cache Storage inspection, real-device test, and deployed runtime: NOT RUN. Do not claim that the deployed PWA has passed offline testing until these are executed.
