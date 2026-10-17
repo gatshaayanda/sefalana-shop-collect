@@ -183,10 +183,17 @@ export default function PwaRegister({ initialEmbedded = false, initialAndroid = 
         registration.addEventListener("updatefound", () => {
           const worker = registration?.installing;
           if (!worker) return;
-          worker.addEventListener("statechange", inspect);
+          worker.addEventListener("statechange", () => {
+            inspect();
+            // Retry shell population after the new worker has actually activated;
+            // its install-time precache is deliberately fail-soft.
+            if (worker.state === "activated") worker.postMessage({ type: "PRECACHE_SHELL" });
+          });
         });
         await registration.update();
         inspect();
+        // Also retry for an already-active worker on a normal online page load.
+        registration.active?.postMessage({ type: "PRECACHE_SHELL" });
       } catch {}
     };
 
