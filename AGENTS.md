@@ -315,7 +315,7 @@ Verification status: source change pushed directly to `main`; no browser viewpor
 
 ## 18. Offline admin shell correction — 2026-10-17
 
-Commit `4bd7b3142b69ebabbc6238b3a6c26934e455a05c` updates `public/sw.js` so the browser-local `/admin` demo is included in the install-time shell precache and is cached after a successful online visit. When offline, direct navigation to `/admin` now falls back to its own cached route instead of being classified with network-only account/order routes. Account, request, order and invite pages remain network-only; API requests remain excluded from the public cache.
+Commits `4bd7b3142b69ebabbc6238b3a6c26934e455a05c` and `83e3e90e68ea1d83b622308fe07b7b89b5f104af` update `public/sw.js` and `src/app/pwa-register.tsx`. The browser-local `/admin` demo is included in the install-time shell precache and is cached after a successful online visit. When offline, direct navigation to `/admin` now falls back to its own cached route instead of being classified with network-only account/order routes. The PWA registration also explicitly retries shell precaching for an already-active worker and after a newly installed worker activates, addressing the case where fail-soft install-time precaching left the offline shell incomplete. Account, request, order and invite pages remain network-only; API requests remain excluded from the public cache.
 
 Scope and safety:
 - This only makes the existing prototype admin interface and its browser-local demo catalogue available offline on that same device after the route has been cached. It does not create shared persistence, staff authentication, server authorization, or real administration capability.
