@@ -324,3 +324,12 @@ Scope and safety:
 - Source inspection: PASS for the intended route policy in `public/sw.js`.
 - GitHub write to `main`: PASS.
 - TypeScript/lint/build, browser offline toggle, cold offline launch, admin form persistence after offline reload, Cache Storage inspection, real-device test, and deployed runtime: NOT RUN. Do not claim that the deployed PWA has passed offline testing until these are executed.
+
+
+## 19. Basket panel mobile width correction — 2026-10-18
+
+Commit `b06b74bfd38bca2b804b7a40b32a53dfd9e8765c` corrects a verified CSS sizing conflict in `src/app/shop.css`: the basket panel had a viewport-relative explicit width while the mobile media query also added left/right margins. Those widths and margins could sum beyond the viewport, particularly at narrow phone widths. The scoped fix sets `margin-inline:auto` on the basket panel at both the normal and <=360px rules, preserving the intended width and existing styling/behavior.
+
+- Source inspection: PASS; the conflicting width-plus-margin rules and the explicit centering correction were verified in the current source.
+- GitHub write to `main`: PASS.
+- Actual viewport rendering, offline rendering, basket-summary overlap, and physical-device checks: NOT RUN. Re-test at 320px, 360px, 390px and desktop, both online and offline after the new deployment is READY.
