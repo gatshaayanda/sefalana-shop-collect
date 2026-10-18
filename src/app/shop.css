@@ -354,6 +354,7 @@
   width:calc(100% - 32px);
   max-width:1184px;
   min-width:0;
+  margin-inline:auto;
   box-sizing:border-box;
 }
 .shop-page .shop-basket-head{
@@ -402,6 +403,7 @@
 @media(max-width:360px){
   .shop-page .shop-basket-panel{
     width:calc(100% - 20px);
+    margin-inline:auto;
     padding:14px 12px;
   }
   .shop-page .shop-basket-head>div{
