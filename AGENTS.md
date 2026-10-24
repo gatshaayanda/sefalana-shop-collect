@@ -333,3 +333,12 @@ Commit `b06b74bfd38bca2b804b7a40b32a53dfd9e8765c` corrects a verified CSS sizing
 - Source inspection: PASS; the conflicting width-plus-margin rules and the explicit centering correction were verified in the current source.
 - GitHub write to `main`: PASS.
 - Actual viewport rendering, offline rendering, basket-summary overlap, and physical-device checks: NOT RUN. Re-test at 320px, 360px, 390px and desktop, both online and offline after the new deployment is READY.
+
+
+## 19. Mobile basket off-screen correction — 2026-10-24
+
+Commit `701b85107855062d604ecc03bf22dd41ae281beb` adjusts the fixed mobile basket summary in `src/app/shop.css`. Source review identified that combining fixed left/right insets with a `max-width: calc(100% - 16px)` constraint can exceed the viewport when padding/borders are added under content-box sizing. The summary now uses border-box sizing, lets the fixed left/right insets determine its width, and constrains the subtotal column so long values wrap rather than push the control off-screen. Text/copy flex sizing is explicitly shrinkable.
+
+- Source inspection: PASS for the targeted sizing constraints.
+- GitHub push to `main`: PASS.
+- Automated checks, deployed build, 320/360/390px viewport checks, actual basket interaction, offline reload, and real-device/browser testing: NOT RUN. Responsive/offline behavior must not be described as fully verified until these tests pass.
