@@ -311,8 +311,25 @@
     left:max(8px,env(safe-area-inset-left));
     right:max(8px,env(safe-area-inset-right));
     bottom:max(8px,env(safe-area-inset-bottom));
-    max-width:calc(100% - 16px);
+    width:auto;
+    max-width:none;
     min-width:0;
+    box-sizing:border-box;
+    overflow:hidden;
+  }
+  .shop-page .shop-mobile-basket-copy{
+    flex:1 1 0;
+    min-width:0;
+    overflow-wrap:anywhere;
+  }
+  .shop-page .shop-mobile-basket-total{
+    flex:0 1 auto;
+    min-width:0;
+    max-width:42%;
+    white-space:normal;
+    overflow-wrap:anywhere;
+    word-break:normal;
+    line-height:1.25;
   }
   .shop-page .shop-mobile-basket-total{
     white-space:normal;
